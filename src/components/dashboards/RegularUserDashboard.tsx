@@ -108,14 +108,14 @@ export const RegularUserDashboard: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">My Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">My Dashboard</h1>
           <p className="text-muted-foreground">Track your devices, tasks, and compliance status</p>
         </div>
-        <Button className="bg-gradient-to-r from-primary to-primary/90">
+        <Button className="bg-gradient-to-r from-primary to-primary/90 w-full sm:w-auto">
           <Upload className="h-4 w-4 mr-2" />
           Upload Evidence
         </Button>
@@ -139,7 +139,7 @@ export const RegularUserDashboard: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {/* My Devices */}
         <Card className="border-border/50">
           <CardHeader>
@@ -147,9 +147,9 @@ export const RegularUserDashboard: React.FC = () => {
             <CardDescription>Monitor your assigned devices</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {myDevices.map((device, index) => (
-                <div key={index} className="p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={index} className="p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50">
                   <div className="flex items-center justify-between mb-2">
                     <div>
                       <p className="font-medium text-sm">{device.name}</p>
@@ -183,9 +183,9 @@ export const RegularUserDashboard: React.FC = () => {
             <CardDescription>Pending compliance activities</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {complianceTasks.slice(0, 3).map((task) => (
-                <div key={task.id} className="p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={task.id} className="p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50">
                   <div className="flex items-start justify-between mb-2">
                     <div className="space-y-1">
                       <p className="font-medium text-sm">{task.title}</p>
@@ -222,9 +222,9 @@ export const RegularUserDashboard: React.FC = () => {
             <CardDescription>Your latest compliance actions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {recentActivity.map((activity, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={index} className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50">
                   {activity.status === 'success' ? (
                     <CheckCircle className="h-4 w-4 text-success mt-0.5" />
                   ) : activity.status === 'warning' ? (

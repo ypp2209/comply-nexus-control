@@ -54,14 +54,14 @@ export const SuperAdminDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Super Admin Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Super Admin Dashboard</h1>
           <p className="text-muted-foreground">Manage organizations and system-wide settings</p>
         </div>
-        <Button className="bg-gradient-to-r from-primary to-primary/90">
+        <Button className="bg-gradient-to-r from-primary to-primary/90 w-full sm:w-auto">
           <Plus className="h-4 w-4 mr-2" />
           New Organization
         </Button>
@@ -90,7 +90,7 @@ export const SuperAdminDashboard: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         {/* Recent Organizations */}
         <Card className="border-border/50">
           <CardHeader>
@@ -98,9 +98,9 @@ export const SuperAdminDashboard: React.FC = () => {
             <CardDescription>Latest organization registrations and updates</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {recentOrganizations.map((org, index) => (
-                <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50 gap-3 sm:gap-0">
                   <div className="space-y-1">
                     <p className="font-medium">{org.name}</p>
                     <p className="text-sm text-muted-foreground">Admin: {org.admin}</p>
@@ -128,9 +128,9 @@ export const SuperAdminDashboard: React.FC = () => {
             <CardDescription>Important system notifications and updates</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {systemAlerts.map((alert, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={index} className="flex items-start gap-3 p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50">
                   <AlertTriangle className={`h-4 w-4 mt-0.5 ${
                     alert.type === 'warning' ? 'text-warning' :
                     alert.type === 'success' ? 'text-success' : 'text-info'

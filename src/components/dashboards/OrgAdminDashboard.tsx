@@ -78,19 +78,19 @@ export const OrgAdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Organization Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Organization Dashboard</h1>
           <p className="text-muted-foreground">Manage your teams, devices, and compliance programs</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button variant="outline" className="w-full sm:w-auto">
             <Plus className="h-4 w-4 mr-2" />
             Add Device
           </Button>
-          <Button className="bg-gradient-to-r from-primary to-primary/90">
+          <Button className="bg-gradient-to-r from-primary to-primary/90 w-full sm:w-auto">
             <Plus className="h-4 w-4 mr-2" />
             New Team
           </Button>
@@ -120,7 +120,7 @@ export const OrgAdminDashboard: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         {/* Compliance Tasks */}
         <Card className="border-border/50">
           <CardHeader>
@@ -128,9 +128,9 @@ export const OrgAdminDashboard: React.FC = () => {
             <CardDescription>Track ongoing compliance initiatives</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {complianceTasks.map((task) => (
-                <div key={task.id} className="p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={task.id} className="p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50">
                   <div className="flex items-start justify-between mb-2">
                     <div className="space-y-1">
                       <p className="font-medium text-sm">{task.title}</p>
@@ -159,9 +159,9 @@ export const OrgAdminDashboard: React.FC = () => {
             <CardDescription>Latest device compliance scans and updates</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {recentDevices.map((device, index) => (
-                <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-secondary/30 border border-border/50">
+                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 rounded-lg bg-secondary/30 border border-border/50 gap-3 sm:gap-0">
                   <div className="space-y-1">
                     <p className="font-medium text-sm">{device.name}</p>
                     <p className="text-xs text-muted-foreground">{device.type} • {device.user}</p>
