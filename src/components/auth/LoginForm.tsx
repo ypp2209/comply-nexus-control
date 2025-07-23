@@ -32,8 +32,10 @@ export const LoginForm: React.FC = () => {
 
   const demoAccounts = [
     { email: 'superadmin@compliance.com', role: 'Super Admin', description: 'Manages organizations and admins' },
-    { email: 'orgadmin@techcorp.com', role: 'Organization Admin', description: 'Manages teams and devices' },
-    { email: 'user@techcorp.com', role: 'Regular User', description: 'Views devices and submits compliance' }
+    { email: 'orgadmin@techcorp.com', role: 'Organization Admin', description: 'TechCorp domain (@techcorp.com)' },
+    { email: 'user@techcorp.com', role: 'Regular User', description: 'TechCorp domain (@techcorp.com)' },
+    { email: 'user@healthsystem.com', role: 'Regular User', description: 'HealthSystem domain (@healthsystem.com)' },
+    { email: 'user@financegroup.com', role: 'Regular User', description: 'FinanceGroup domain (@financegroup.com)' }
   ];
 
   return (

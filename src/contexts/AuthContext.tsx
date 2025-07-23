@@ -3,6 +3,12 @@ import Cookies from 'js-cookie';
 
 export type UserRole = 'super_admin' | 'org_admin' | 'regular_user';
 
+export interface Organization {
+  id: string;
+  name: string;
+  whitelistedDomain: string;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -59,6 +65,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(false);
   }, []);
 
+  // Mock organizations with whitelisted domains
+  const mockOrganizations: Organization[] = [
+    { id: 'org_1', name: 'TechCorp Inc.', whitelistedDomain: 'techcorp.com' },
+    { id: 'org_2', name: 'HealthSystem LLC', whitelistedDomain: 'healthsystem.com' },
+    { id: 'org_3', name: 'FinanceGroup', whitelistedDomain: 'financegroup.com' }
+  ];
+
+  const validateEmailDomain = (email: string, organizationId?: string): boolean => {
+    if (!organizationId) return true; // Super admin has no org restrictions
+    
+    const emailDomain = email.split('@')[1];
+    const organization = mockOrganizations.find(org => org.id === organizationId);
+    
+    return organization ? emailDomain === organization.whitelistedDomain : false;
+  };
+
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       setIsLoading(true);
@@ -66,7 +88,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Mock API call - replace with actual API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock user data based on email
+      // Extract email domain for validation
+      const emailDomain = email.split('@')[1];
+      
+      // Mock user data based on email with domain validation
       let mockUser: User;
       if (email === 'superadmin@compliance.com') {
         mockUser = {
@@ -76,26 +101,63 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           lastName: 'Admin',
           role: 'super_admin'
         };
-      } else if (email === 'orgadmin@techcorp.com') {
+      } else if (emailDomain === 'techcorp.com') {
+        // Find organization by domain
+        const organization = mockOrganizations.find(org => org.whitelistedDomain === emailDomain);
+        if (!organization) {
+          throw new Error('Domain not whitelisted for any organization');
+        }
+
+        if (email === 'orgadmin@techcorp.com') {
+          mockUser = {
+            id: '2',
+            email,
+            firstName: 'Organization',
+            lastName: 'Admin',
+            role: 'org_admin',
+            organizationId: organization.id,
+            organizationName: organization.name
+          };
+        } else {
+          mockUser = {
+            id: '3',
+            email,
+            firstName: 'Regular',
+            lastName: 'User',
+            role: 'regular_user',
+            organizationId: organization.id,
+            organizationName: organization.name
+          };
+        }
+      } else if (emailDomain === 'healthsystem.com') {
+        const organization = mockOrganizations.find(org => org.whitelistedDomain === emailDomain);
         mockUser = {
-          id: '2',
+          id: '4',
           email,
-          firstName: 'Organization',
-          lastName: 'Admin',
-          role: 'org_admin',
-          organizationId: 'org_1',
-          organizationName: 'TechCorp Inc.'
-        };
-      } else {
-        mockUser = {
-          id: '3',
-          email,
-          firstName: 'Regular',
+          firstName: 'Health',
           lastName: 'User',
           role: 'regular_user',
-          organizationId: 'org_1',
-          organizationName: 'TechCorp Inc.'
+          organizationId: organization!.id,
+          organizationName: organization!.name
         };
+      } else if (emailDomain === 'financegroup.com') {
+        const organization = mockOrganizations.find(org => org.whitelistedDomain === emailDomain);
+        mockUser = {
+          id: '5',
+          email,
+          firstName: 'Finance',
+          lastName: 'User',
+          role: 'regular_user',
+          organizationId: organization!.id,
+          organizationName: organization!.name
+        };
+      } else {
+        throw new Error('Email domain not whitelisted for any organization');
+      }
+
+      // Validate domain for organization users
+      if (mockUser.organizationId && !validateEmailDomain(email, mockUser.organizationId)) {
+        throw new Error('Email domain does not match organization whitelist');
       }
 
       const mockToken = 'mock_jwt_token_' + Date.now();
